@@ -3,7 +3,6 @@ package com.robottest.mouse;
 import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
 import java.awt.Robot;
 import java.io.BufferedReader;
 import java.io.File;
