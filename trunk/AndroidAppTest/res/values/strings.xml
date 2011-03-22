@@ -2,4 +2,13 @@
 <resources>
     <string name="hello">Hello World, Ding Jia!</string>
     <string name="app_name">HelloWorld</string>
+    <color name="prettyTextColor">#ff0000</color>
+    <string-array name="developer">
+        <item>Jia Ding</item>
+        <item>Jaeger Ding</item>
+        <item>Tin Tin</item>
+    </string-array>
+    <string name="test01">This is a test!</string>
+    <drawable name="redDrawable">#F00</drawable>
+    <dimen name="textPointSize">14pt</dimen>
 </resources>

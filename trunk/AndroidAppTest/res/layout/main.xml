@@ -8,5 +8,19 @@
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/hello"
+    android:textColor="@color/prettyTextColor"
     />
+<TextView 
+	android:text="@string/test01" 
+	android:id="@+id/str_test01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+</TextView>
+<TextView 
+	android:layout_width="wrap_content" 
+	android:text="@array/developer" 
+	android:id="@+id/astr_dev" android:layout_height="wrap_content">
+</TextView>
+<AnalogClock android:id="@+id/analogClock1" android:layout_width="wrap_content" android:layout_height="wrap_content"></AnalogClock>
+
 </LinearLayout>
