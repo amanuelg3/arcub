@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="main_background">#000000ff</color> <!-- Black -->
+	<color name="main_title">#ffff0000</color>
+	<color name="grid_background">#ffe6f0ff</color>
+	<color name="grid_light">#64c6d4ef</color>
+	<color name="grid_dark">#6456648f</color>
+</resources>

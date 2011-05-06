@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/main_background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:padding="10dip"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+	<LinearLayout
+    	android:orientation="vertical"
+    	android:layout_height="fill_parent"
+    	android:layout_width="fill_parent"
+    	android:layout_gravity="center">
+    	<TextView
+    		android:text="@string/main_title"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textColor="@color/main_title"
+    		android:textSize="18sp"
+    		android:layout_marginBottom="40dip">
+    	</TextView>
+    	<Button
+    		android:id="@+id/main_btn_pc"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:text="@string/main_btn_play_with_ai">
+    	</Button>
+    	<Button
+    		android:id="@+id/main_btn_pp"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:text="@string/main_btn_play_with_pp">
+    	</Button>
+    	<Button
+    		android:id="@+id/main_btn_how"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:text="@string/main_btn_about">
+    	</Button>
+    	<Button
+    		android:id="@+id/main_btn_exit"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:text="@string/main_btn_exit">
+    	</Button>	
+    	
+    </LinearLayout> 
 </LinearLayout>
