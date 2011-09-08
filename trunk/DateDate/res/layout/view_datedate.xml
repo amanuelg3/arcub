@@ -1,15 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-	<com.google.android.maps.MapView
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <com.google.android.maps.MapView
 		android:id="@+id/main_mapview"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:apiKey="0eTDuGFDOy-WscLxv7J4-yp5L5W5BImBg13k07Q"
 	    android:clickable="true"
 	    />
-    
-</RelativeLayout>
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:background="@android:color/transparent"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		  
+<!--  Login View -->
+		<LinearLayout 
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/main_login"
+			android:visibility="visible"
+			android:orientation="vertical"
+			android:background="@color/trans_light_gray"
+			android:layout_centerInParent="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView 
+				android:text="@string/login_info"
+				android:textSize="15sp"
+				android:textColor="@color/orange_red"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:padding="5sp"/>
+			<TableLayout
+		  		android:layout_width="fill_parent"
+		  		android:layout_height="wrap_content"
+		  		android:layout_marginTop="5dp"
+		  		>
+		  		<TableRow 
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content">
+		  			<TextView 
+		  				android:text="@string/login_id_label"
+		  				android:textSize="15sp"
+		  				android:textColor="@color/black"
+		  				android:layout_width="75sp"
+		  				android:layout_height="wrap_content"
+		  			/>
+		  			<EditText 
+		  				android:id="@+id/login_uid"
+		  				android:hint="username@jabber.org"
+		  				android:textColor="@color/black"
+		  				android:layout_width="240sp"
+		  				android:layout_height="wrap_content"/>
+	  			</TableRow>
+		  		<TableRow 
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:layout_marginTop="3dp">
+		  			<TextView 
+		  				android:text="@string/login_pwd_label"
+		  				android:textSize="15sp"
+		  				android:textColor="@color/black"
+		  				android:layout_width="75sp"
+		  				android:layout_height="wrap_content"
+		  			/>
+		  			<EditText 
+		  				android:id="@+id/login_pwd"
+		  				android:password="true"
+		  				android:textColor="@color/black"
+		  				android:hint="*********"
+		  				android:layout_width="240sp"
+		  				android:layout_height="wrap_content"/>
+	  			</TableRow>
+	  		</TableLayout>	
+	  		<TableLayout
+		  		android:layout_width="fill_parent"
+		  		android:layout_height="wrap_content"
+		  		android:layout_marginTop="5dp"
+		  		>	
+	  			<TableRow 
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  				android:layout_marginTop="3dp">
+	  				<CheckBox 
+	  					android:id="@+id/login_checkbox_info"
+	  					android:text="@string/login_checkbox_label"
+	  					android:textSize="15sp"
+	  					android:textColor="@color/orange_red"
+	  					android:checked="false"
+	  					android:layout_width="wrap_content"
+	  					android:layout_height="wrap_content"/>
+	  				<Button 
+	  					android:id="@+id/login_btn_login"
+	  					android:text="@string/login_btn_label"
+	  					android:textSize="15sp"
+	  					android:layout_width="100dp"
+	  					android:layout_height="wrap_content"
+	  					android:layout_marginLeft="20dp"
+	  					android:background="@drawable/roundrectbutton"/>	
+	  			</TableRow>	  		
+	  		</TableLayout>	
+		</LinearLayout>					  
+		  
+	</RelativeLayout>   
+</FrameLayout>    
+
+
