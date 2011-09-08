@@ -1,12 +1,5 @@
 package com.datedate.xmpp;
 
+public interface UserLogin {
 
-public class UserLogin {
-	private String user;
-	private String password;
-	private String service;
-	
-	public UserLogin(String uid, String pwd) {
-		
-	}
 }
