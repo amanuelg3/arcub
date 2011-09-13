@@ -1,34 +1,26 @@
-package com.datedate.xmpp;
+package com.datedate.xmpp.login;
 
-import org.jivesoftware.*;
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.Roster;
-import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
+
 
 import android.util.Log;
 
-public class GmailUserLogin extends UserLogin{
+public class JabberUserLogin extends UserLogin{
 	private XMPPConnection conn = null;
-	private static String logtag = "GmailLogin";
+	private static String logtag = "JabberLogin";
 
-	public GmailUserLogin(String uid, String pwd) {
+	public JabberUserLogin(String uid, String pwd) {
 		super(uid, pwd);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public XMPPConnection connectServer() {
-		ConnectionConfiguration cfg = new ConnectionConfiguration("talk.google.com", 5222, "gmail.com");
-		cfg.setSASLAuthenticationEnabled(false);
+		ConnectionConfiguration cfg = new ConnectionConfiguration("jabber.org", 5222);
 		conn = new XMPPConnection(cfg);
-    	try {   		
+    	try {    		
 			conn.connect();
 			conn.login(super.user, super.password);
 			Presence presence = new Presence(Presence.Type.available);

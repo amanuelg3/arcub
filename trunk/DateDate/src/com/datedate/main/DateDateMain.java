@@ -48,15 +48,19 @@ public class DateDateMain extends MapActivity implements OnClickListener{
 		// Map Controller
 		mapController = mapView.getController();
 		mapController.setZoom(16);
-	}
-	
-	private void initLogin() {
+		
+		// Initialise all the components
+		// View Login
 		view_login = (LinearLayout) findViewById(R.id.main_view_login);
 		login_uid = (EditText) findViewById(R.id.login_uid);
 		login_pwd = (EditText) findViewById(R.id.login_pwd);
 		login_save = (CheckBox) findViewById(R.id.login_checkbox_info);
 		login_btn = (Button) findViewById(R.id.login_btn_login);
+	}
+	
+	private void initLogin() {		
 		view_login.setVisibility(LinearLayout.VISIBLE);
+		login_btn.setOnClickListener(this);
 	}
 	
 

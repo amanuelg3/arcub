@@ -1,4 +1,4 @@
-package com.datedate.xmpp;
+package com.datedate.xmpp.login;
 
 import org.jivesoftware.smack.XMPPConnection;
 
