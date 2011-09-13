@@ -19,7 +19,7 @@
 <!--  Login View -->
 		<LinearLayout 
 			xmlns:android="http://schemas.android.com/apk/res/android"
-			android:id="@+id/main_login"
+			android:id="@+id/main_view_login"
 			android:visibility="visible"
 			android:orientation="vertical"
 			android:background="@color/trans_light_gray"
