@@ -7,4 +7,7 @@
     <string name="login_pwd_label">Password:</string>
     <string name="login_checkbox_label">Remember Account?</string>
     <string name="login_btn_label">Login</string>
+    <string name="status_btn_refresh_label">刷新</string>
+    <string name="status_btn_location_label">位置</string>
+    <string name="status_btn_self_label">自己</string>
 </resources>
