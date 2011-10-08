@@ -161,6 +161,61 @@
 				</TableRow>
 			</TableLayout>		
 		</LinearLayout>
+		
+		<!--  Status View -->
+		<LinearLayout 
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/main_view_menu"
+			android:visibility="invisible"
+			android:orientation="vertical"
+			android:background="@color/trans_light_gray"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="310dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView 
+				android:text="@string/menu_label"
+				android:textColor="@color/light_blue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				/>
+			<Button
+				android:id="@+id/menu_btn_talk"
+				android:text="@string/menu_btn_talk_label"
+				android:textSize="12sp"
+				android:layout_width="90dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="2dp"
+				android:background="@drawable/roundrectbutton" 
+				/>
+			<Button
+				android:id="@+id/menu_btn_request"
+				android:text="@string/menu_btn_current_loc_label"
+				android:textSize="12sp"
+				android:layout_width="90dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="2dp"
+				android:background="@drawable/roundrectbutton" 
+				/>
+			<Button
+				android:id="@+id/menu_btn_date"
+				android:text="@string/menu_btn_date_label"
+				android:textSize="12sp"
+				android:layout_width="90dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="2dp"
+				android:background="@drawable/roundrectbutton" 
+				/>
+			<Button
+				android:id="@+id/menu_btn_exit"
+				android:text="@string/menu_btn_exit_label"
+				android:textSize="12sp"
+				android:layout_width="90dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="2dp"
+				android:background="@drawable/roundrectbutton" 
+				/>				
+		</LinearLayout>	
 							  
 	</RelativeLayout>    
     
