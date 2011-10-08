@@ -10,4 +10,9 @@
     <string name="status_btn_refresh_label">刷新</string>
     <string name="status_btn_location_label">位置</string>
     <string name="status_btn_self_label">自己</string>
+    <string name="menu_label">菜单</string>
+    <string name="menu_btn_current_loc_label">请求当前位置</string>
+    <string name="menu_btn_talk_label">聊天</string>
+    <string name="menu_btn_date_label">约会</string>
+    <string name="menu_btn_exit_label">退出</string>
 </resources>

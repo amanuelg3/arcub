@@ -31,6 +31,7 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	// All Views of JiaYi MainActivity
 	private LinearLayout view_login;
 	private LinearLayout view_status;
+	private LinearLayout view_menu;
 	
 	// Login in View
 	private EditText login_uid;
@@ -47,6 +48,10 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private Button status_btn_loc;
 	private Button status_btn_self;
 	private boolean lover_status;
+	
+	// Menu view
+	
+	
 	
 	// Location
 	private Drawable xuyi;
@@ -249,11 +254,16 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private void initPosition() {
 		if (uLogin.user.equals("jia.ding")) {
 			drawUserPortrait(dingjia, jiaLocation);
-			drawUserPortrait(xuyi, yiLocation);
+			drawClickableUserPortrait(xuyi, yiLocation);
 		} else {
 			drawUserPortrait(xuyi, yiLocation);
-			drawUserPortrait(dingjia, jiaLocation);
+			drawClickableUserPortrait(dingjia, jiaLocation);
 		}
+	}
+	
+	private void initMenu() {
+		view_menu = (LinearLayout) findViewById(R.id.main_view_menu);
+		view_menu.setVisibility(LinearLayout.VISIBLE);
 	}
 	
 	private boolean varifyLoginFormat(String uid, String pwd) {
@@ -281,6 +291,27 @@ public class MainActivity extends MapActivity implements OnClickListener{
 			ImageView img = new ImageView(this);
 			img.setImageDrawable(portrait);
 
+			mapView.addView(img, mScreenLayoutParams);
+	}
+	
+	private void drawClickableUserPortrait(Drawable portrait, GeoPoint point) {
+		mapController.animateTo(point);
+
+		MapView.LayoutParams mScreenLayoutParams = new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT, 
+				MapView.LayoutParams.WRAP_CONTENT, 
+				point,
+				MapView.LayoutParams.CENTER|MapView.LayoutParams.MODE_MAP);
+
+			ImageView img = new ImageView(this);
+			img.setImageDrawable(portrait);
+			img.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					initMenu();
+				}
+			});
 			mapView.addView(img, mScreenLayoutParams);
 	}
 	
