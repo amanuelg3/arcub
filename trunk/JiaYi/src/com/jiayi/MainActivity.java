@@ -4,12 +4,15 @@ import org.jivesoftware.smack.XMPPConnection;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +43,14 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	// Status view
 	private TextView status_label;
 	private TextView status;
+	private Button status_btn_refresh;
+	private Button status_btn_loc;
+	private Button status_btn_self;
 	private boolean lover_status;
+	
+	// Location
+	private Drawable xuyi;
+	private Drawable dingjia;
 	
 	
 	private XMPPConnection conn = null;
@@ -48,6 +58,10 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	
 	private GeoPoint jiaLocation = new GeoPoint(49011071, 8430151);
 	private GeoPoint yiLocation = new GeoPoint(48727492, 9123924);
+	private GeoPoint loverLocation;
+	private GeoPoint selfLocation;
+	
+	private String loverID;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -125,6 +139,21 @@ public class MainActivity extends MapActivity implements OnClickListener{
 			}
 			
 			break;
+		case R.id.status_btn_refresh :
+			if (xmpp.getAvailableUser(loverID)) {
+				status.setText("在线");
+				status.setTextColor(getResources().getColor(R.color.red));
+			} else {
+				status.setText("离线");
+				status.setTextColor(getResources().getColor(R.color.black));
+			}
+			break;
+		case R.id.status_btn_locate :
+			mapController.animateTo(loverLocation);
+			break;
+		case R.id.status_btn_self :
+			mapController.animateTo(selfLocation);
+			break;
 		}
 		
 	}
@@ -139,7 +168,6 @@ public class MainActivity extends MapActivity implements OnClickListener{
 
 		// Map Controller
 		mapController = mapView.getController();
-		mapController.animateTo(jiaLocation);
 		mapController.setZoom(16);				
 	}
 
@@ -175,9 +203,23 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		status_label = (TextView) findViewById(R.id.lover_status_label);
 		status = (TextView) findViewById(R.id.lover_status);
 		
+		status_btn_refresh = (Button) findViewById(R.id.status_btn_refresh);
+		status_btn_refresh.setOnClickListener(this);
+		status_btn_loc = (Button) findViewById(R.id.status_btn_locate);
+		status_btn_loc.setOnClickListener(this);
+		status_btn_self = (Button) findViewById(R.id.status_btn_self);
+		status_btn_self.setOnClickListener(this);
+		
+		
+		dingjia = this.getResources().getDrawable(R.drawable.dingjia);
+		xuyi = this.getResources().getDrawable(R.drawable.xuyi01);
+		
 		if (uLogin.user.equals("jia.ding")) {
+			selfLocation = jiaLocation;
+			loverLocation = yiLocation;
+			loverID = "yi.xu@jabber.org";
 			status_label.setText("许翌目前状态:");
-			lover_status = xmpp.getAvailableUser("yi.xu@jabber.org");
+			lover_status = xmpp.getAvailableUser(loverID);
 			if(lover_status){
 				status.setText("在线");
 				status.setTextColor(getResources().getColor(R.color.red));
@@ -187,8 +229,11 @@ public class MainActivity extends MapActivity implements OnClickListener{
 			}
 		}			
 		else {
+			selfLocation = yiLocation;
+			loverLocation = jiaLocation;
+			loverID = "jia.ding@jabber.org";
 			status_label.setText("丁佳目前状态:");
-			lover_status = xmpp.getAvailableUser("jia.ding@jabber.org");
+			lover_status = xmpp.getAvailableUser(loverID);
 			if(lover_status) {
 				status.setText("在线");
 				status.setTextColor(getResources().getColor(R.color.red));
@@ -196,11 +241,19 @@ public class MainActivity extends MapActivity implements OnClickListener{
 				status.setText("离线");
 				status.setTextColor(getResources().getColor(R.color.black));
 			}
-		}		
+		}
+		
+		initPosition();
 	}
 	
-	private void initLoverPosition() {
-		
+	private void initPosition() {
+		if (uLogin.user.equals("jia.ding")) {
+			drawUserPortrait(dingjia, jiaLocation);
+			drawUserPortrait(xuyi, yiLocation);
+		} else {
+			drawUserPortrait(xuyi, yiLocation);
+			drawUserPortrait(dingjia, jiaLocation);
+		}
 	}
 	
 	private boolean varifyLoginFormat(String uid, String pwd) {
@@ -216,4 +269,20 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		}
 		
 	}
+	
+	private void drawUserPortrait(Drawable portrait, GeoPoint point) {
+		mapController.animateTo(point);
+
+		MapView.LayoutParams mScreenLayoutParams = new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT, 
+				MapView.LayoutParams.WRAP_CONTENT, 
+				point,
+				MapView.LayoutParams.CENTER|MapView.LayoutParams.MODE_MAP);
+
+			ImageView img = new ImageView(this);
+			img.setImageDrawable(portrait);
+
+			mapView.addView(img, mScreenLayoutParams);
+	}
+	
+	
 }

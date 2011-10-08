@@ -22,6 +22,8 @@ public class XMPPUtility {
 		return false;
 	}
 	
-	//public void 
+	public boolean refreshStatus() {
+		return false;
+	}
 	
 }

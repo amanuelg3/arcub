@@ -107,7 +107,7 @@
 		<LinearLayout 
 			xmlns:android="http://schemas.android.com/apk/res/android"
 			android:id="@+id/main_view_status"
-			android:visibility="visible"
+			android:visibility="invisible"
 			android:orientation="vertical"
 			android:background="@color/trans_light_gray"
 			android:layout_alignParentLeft="true"
