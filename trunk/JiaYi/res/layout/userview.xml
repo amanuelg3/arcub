@@ -162,7 +162,7 @@
 			</TableLayout>		
 		</LinearLayout>
 		
-		<!--  Status View -->
+		<!--  Menu View -->
 		<LinearLayout 
 			xmlns:android="http://schemas.android.com/apk/res/android"
 			android:id="@+id/main_view_menu"
@@ -207,15 +207,67 @@
 				android:background="@drawable/roundrectbutton" 
 				/>
 			<Button
-				android:id="@+id/menu_btn_exit"
-				android:text="@string/menu_btn_exit_label"
+				android:id="@+id/menu_btn_close"
+				android:text="@string/menu_btn_close_label"
 				android:textSize="12sp"
 				android:layout_width="90dp"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="2dp"
 				android:background="@drawable/roundrectbutton" 
 				/>				
+		</LinearLayout>
+		
+		<!--  Chat View -->	
+		<LinearLayout 
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/main_view_chat"
+			android:visibility="invisible"
+			android:orientation="vertical"
+			android:background="@color/chocolate"
+			android:layout_alignParentRight="true"
+			android:layout_width="fill_parent"
+			android:layout_height="220dp">
+			<TextView
+				android:id="@+id/chat_txt_show"
+				android:background="@color/white"
+				android:layout_width="fill_parent"
+				android:layout_height="160dp"
+				android:scrollbars="vertical"
+				/>
+			<TableLayout 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp">
+				<TableRow >
+					<EditText 
+						android:id="@+id/chat_edit_input"
+						android:layout_width="260dp"
+	  					android:layout_height="wrap_content"				
+						/>
+	  				<Button 
+						android:id="@+id/chat_btn_send"
+	  					android:text="@string/chat_btn_send_label"
+	  					android:textSize="16sp"
+	  					android:layout_width="80dp"
+	  					android:layout_height="wrap_content"
+	  					android:layout_marginLeft="5dp"
+	  					android:background="@drawable/greenroundrectbtn"
+	  					/>
+	  				<Button 
+	  					android:id="@+id/chat_btn_close"
+	  					android:text="@string/chat_btn_close_label"
+	  					android:textSize="16sp"
+	  					android:layout_width="80dp"
+	  					android:layout_height="wrap_content"
+	  					android:layout_marginLeft="5dp"
+	  					android:background="@drawable/greenroundrectbtn"
+	  					/>		
+				</TableRow>
+			</TableLayout>	
+				
+				
 		</LinearLayout>	
+		
 							  
 	</RelativeLayout>    
     

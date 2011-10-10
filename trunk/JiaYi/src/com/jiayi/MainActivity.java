@@ -1,12 +1,19 @@
 package com.jiayi;
 
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
+import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Message;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,6 +39,7 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private LinearLayout view_login;
 	private LinearLayout view_status;
 	private LinearLayout view_menu;
+	private LinearLayout view_chat;
 	
 	// Login in View
 	private EditText login_uid;
@@ -50,7 +58,16 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private boolean lover_status;
 	
 	// Menu view
+	private Button menu_btn_talk;
+	private Button menu_btn_request_loc;
+	private Button menu_btn_date;
+	private Button menu_btn_close;
 	
+	// Chat View
+	private TextView chat_chatlog;
+	private EditText chat_input;
+	private Button chat_btn_send;
+	private Button chat_btn_close;
 	
 	
 	// Location
@@ -58,13 +75,19 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private Drawable dingjia;
 	
 	
+	// XMPP
 	private XMPPConnection conn = null;
 	private XMPPUtility xmpp;
+	private ChatManager chatManager;
+	private Chat newchat;
 	
+	
+	// General
 	private GeoPoint jiaLocation = new GeoPoint(49011071, 8430151);
 	private GeoPoint yiLocation = new GeoPoint(48727492, 9123924);
 	private GeoPoint loverLocation;
 	private GeoPoint selfLocation;
+	private String logtag = "JiaYi Main";
 	
 	private String loverID;
 
@@ -141,9 +164,9 @@ public class MainActivity extends MapActivity implements OnClickListener{
 				initJiaYiStatus();
 			} else {
 				makeToast("Account or Password is not correct", 0);
-			}
-			
+			}			
 			break;
+		// View Status	
 		case R.id.status_btn_refresh :
 			if (xmpp.getAvailableUser(loverID)) {
 				status.setText("ÔÚÏß");
@@ -158,6 +181,26 @@ public class MainActivity extends MapActivity implements OnClickListener{
 			break;
 		case R.id.status_btn_self :
 			mapController.animateTo(selfLocation);
+			break;
+		// View Menu
+		case R.id.menu_btn_talk :
+			view_menu.setVisibility(LinearLayout.INVISIBLE);
+			initChatView();
+			break;
+		case R.id.menu_btn_request :
+			break;
+		case R.id.menu_btn_date :
+			break;
+		case R.id.menu_btn_close :
+			view_menu.setVisibility(LinearLayout.INVISIBLE);
+			break;
+		
+		// View Chat	
+		case R.id.chat_btn_send :
+			sendMsg(chat_input.getText().toString());
+			break;
+		case R.id.chat_btn_close :
+			view_chat.setVisibility(LinearLayout.INVISIBLE);
 			break;
 		}
 		
@@ -247,9 +290,43 @@ public class MainActivity extends MapActivity implements OnClickListener{
 				status.setTextColor(getResources().getColor(R.color.black));
 			}
 		}
-		
+		initMessageListener();
 		initPosition();
 	}
+	
+	private void initMessageListener() {
+		//
+		chatManager = conn.getChatManager();
+		newchat = chatManager.createChat(loverID,
+				new MessageListener() {
+					@Override
+					public void processMessage(Chat arg0, Message arg1) {
+						// TODO Auto-generated method stub
+						Log.v(logtag, "Receive msg " + arg1.getBody());
+						android.os.Message m = msgHandler.obtainMessage();
+						m.obj = arg1.getFrom() + " said: " + arg1.getBody();
+						msgHandler.sendMessage(m);
+					}
+				});
+	}
+	
+	Handler msgHandler = new Handler() {
+    	@Override
+		public void handleMessage(android.os.Message msg) {
+			String strmsg = (String) msg.obj;
+			Log.v(logtag, "handler: receive a msg:" + strmsg);
+			chat_chatlog.setText(strmsg);
+		};
+    };
+    
+    private void sendMsg(String msg) {
+    	try {
+			newchat.sendMessage(msg);
+		} catch (XMPPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 	
 	private void initPosition() {
 		if (uLogin.user.equals("jia.ding")) {
@@ -264,6 +341,30 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private void initMenu() {
 		view_menu = (LinearLayout) findViewById(R.id.main_view_menu);
 		view_menu.setVisibility(LinearLayout.VISIBLE);
+		
+		menu_btn_talk = (Button) findViewById(R.id.menu_btn_talk);
+		menu_btn_request_loc = (Button) findViewById(R.id.menu_btn_request);
+		menu_btn_date = (Button) findViewById(R.id.menu_btn_date);
+		menu_btn_close = (Button) findViewById(R.id.menu_btn_close);
+		
+		menu_btn_talk.setOnClickListener(this);
+		menu_btn_request_loc.setOnClickListener(this);
+		menu_btn_date.setOnClickListener(this);
+		menu_btn_close.setOnClickListener(this);
+		
+	}
+	
+	private void initChatView() {
+		view_chat = (LinearLayout) findViewById(R.id.main_view_chat);
+		view_chat.setVisibility(LinearLayout.VISIBLE);
+		
+		chat_chatlog = (TextView) findViewById(R.id.chat_txt_show);
+		chat_input = (EditText) findViewById(R.id.chat_edit_input);
+		chat_btn_send = (Button) findViewById(R.id.chat_btn_send);
+		chat_btn_close = (Button) findViewById(R.id.chat_btn_close);
+		
+		chat_btn_send.setOnClickListener(this);
+		chat_btn_close.setOnClickListener(this);
 	}
 	
 	private boolean varifyLoginFormat(String uid, String pwd) {
