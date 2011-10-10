@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -90,6 +91,7 @@ public class MainActivity extends MapActivity implements OnClickListener{
 	private String logtag = "JiaYi Main";
 	
 	private String loverID;
+	private String chatlog;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -103,6 +105,7 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.userview);
 		initMap();
+		initAllComponent();
 		initLogin();
 	}
 
@@ -198,8 +201,10 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		// View Chat	
 		case R.id.chat_btn_send :
 			sendMsg(chat_input.getText().toString());
+			chat_input.setText("");
 			break;
 		case R.id.chat_btn_close :
+			mapView.setClickable(true);
 			view_chat.setVisibility(LinearLayout.INVISIBLE);
 			break;
 		}
@@ -218,35 +223,15 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		mapController = mapView.getController();
 		mapController.setZoom(16);				
 	}
-
 	
-	private void initLogin() {				
-		// View Login
-		view_login = (LinearLayout) findViewById(R.id.main_view_login);
-		view_login.setVisibility(LinearLayout.VISIBLE);
+	private void initAllComponent() {
+		chatlog = "";
 		
 		login_uid = (EditText) findViewById(R.id.login_uid);
 		login_pwd = (EditText) findViewById(R.id.login_pwd);
 		login_save = (CheckBox) findViewById(R.id.login_checkbox_info);
 		login_btn = (Button) findViewById(R.id.login_btn_login);
-		
-		prefs = getSharedPreferences("USERACCOUNT", MODE_PRIVATE);
-		String uid = prefs.getString("userid", null);
-		String pwd = prefs.getString("password", null);
-		if (uid != null && pwd != null) {
-			login_uid.setText(uid);
-			login_pwd.setText(pwd);
-		}
-		
 		login_btn.setOnClickListener(this);
-	}
-	
-	private void initJiaYiStatus() {
-		xmpp = new XMPPUtility(conn);
-		
-		// View Status
-		view_status = (LinearLayout) findViewById(R.id.main_view_status);
-		view_status.setVisibility(LinearLayout.VISIBLE);
 		
 		status_label = (TextView) findViewById(R.id.lover_status_label);
 		status = (TextView) findViewById(R.id.lover_status);
@@ -257,6 +242,53 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		status_btn_loc.setOnClickListener(this);
 		status_btn_self = (Button) findViewById(R.id.status_btn_self);
 		status_btn_self.setOnClickListener(this);
+		
+		menu_btn_talk = (Button) findViewById(R.id.menu_btn_talk);
+		menu_btn_request_loc = (Button) findViewById(R.id.menu_btn_request);
+		menu_btn_date = (Button) findViewById(R.id.menu_btn_date);
+		menu_btn_close = (Button) findViewById(R.id.menu_btn_close);
+		
+		menu_btn_talk.setOnClickListener(this);
+		menu_btn_request_loc.setOnClickListener(this);
+		menu_btn_date.setOnClickListener(this);
+		menu_btn_close.setOnClickListener(this);
+		
+		chat_chatlog = (TextView) findViewById(R.id.chat_txt_show);
+		chat_input = (EditText) findViewById(R.id.chat_edit_input);
+		chat_btn_send = (Button) findViewById(R.id.chat_btn_send);
+		chat_btn_close = (Button) findViewById(R.id.chat_btn_close);
+		
+		chat_btn_send.setOnClickListener(this);
+		chat_btn_close.setOnClickListener(this);
+	}
+
+	
+	private void initLogin() {				
+		// View Login
+		view_login = (LinearLayout) findViewById(R.id.main_view_login);
+		view_login.setVisibility(LinearLayout.VISIBLE);
+		
+		
+		
+		prefs = getSharedPreferences("USERACCOUNT", MODE_PRIVATE);
+		String uid = prefs.getString("userid", null);
+		String pwd = prefs.getString("password", null);
+		if (uid != null && pwd != null) {
+			login_uid.setText(uid);
+			login_pwd.setText(pwd);
+		}
+		
+		
+	}
+	
+	private void initJiaYiStatus() {
+		xmpp = new XMPPUtility(conn);
+		
+		// View Status
+		view_status = (LinearLayout) findViewById(R.id.main_view_status);
+		view_status.setVisibility(LinearLayout.VISIBLE);
+		
+		
 		
 		
 		dingjia = this.getResources().getDrawable(R.drawable.dingjia);
@@ -304,7 +336,7 @@ public class MainActivity extends MapActivity implements OnClickListener{
 						// TODO Auto-generated method stub
 						Log.v(logtag, "Receive msg " + arg1.getBody());
 						android.os.Message m = msgHandler.obtainMessage();
-						m.obj = arg1.getFrom() + " said: " + arg1.getBody();
+						m.obj = arg1.getBody();
 						msgHandler.sendMessage(m);
 					}
 				});
@@ -315,12 +347,17 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			String strmsg = (String) msg.obj;
 			Log.v(logtag, "handler: receive a msg:" + strmsg);
-			chat_chatlog.setText(strmsg);
+			chatlog += "<font color='#ff4500'>" + loverID + " said:" + "<br/>" +
+						 strmsg + "<br/>" + "</font>";
+			chat_chatlog.setText(Html.fromHtml(chatlog));
 		};
     };
     
     private void sendMsg(String msg) {
     	try {
+    		chatlog +=  "<font color='#7cfc00'>" + "Œ“" + " said:" + "<br/>" + 
+    					msg + "<br/>" + "</font>";
+    		chat_chatlog.setText(Html.fromHtml(chatlog));
 			newchat.sendMessage(msg);
 		} catch (XMPPException e) {
 			// TODO Auto-generated catch block
@@ -342,29 +379,15 @@ public class MainActivity extends MapActivity implements OnClickListener{
 		view_menu = (LinearLayout) findViewById(R.id.main_view_menu);
 		view_menu.setVisibility(LinearLayout.VISIBLE);
 		
-		menu_btn_talk = (Button) findViewById(R.id.menu_btn_talk);
-		menu_btn_request_loc = (Button) findViewById(R.id.menu_btn_request);
-		menu_btn_date = (Button) findViewById(R.id.menu_btn_date);
-		menu_btn_close = (Button) findViewById(R.id.menu_btn_close);
 		
-		menu_btn_talk.setOnClickListener(this);
-		menu_btn_request_loc.setOnClickListener(this);
-		menu_btn_date.setOnClickListener(this);
-		menu_btn_close.setOnClickListener(this);
 		
 	}
 	
 	private void initChatView() {
 		view_chat = (LinearLayout) findViewById(R.id.main_view_chat);
 		view_chat.setVisibility(LinearLayout.VISIBLE);
+		mapView.setClickable(false);
 		
-		chat_chatlog = (TextView) findViewById(R.id.chat_txt_show);
-		chat_input = (EditText) findViewById(R.id.chat_edit_input);
-		chat_btn_send = (Button) findViewById(R.id.chat_btn_send);
-		chat_btn_close = (Button) findViewById(R.id.chat_btn_close);
-		
-		chat_btn_send.setOnClickListener(this);
-		chat_btn_close.setOnClickListener(this);
 	}
 	
 	private boolean varifyLoginFormat(String uid, String pwd) {
