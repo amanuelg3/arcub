@@ -14,5 +14,7 @@
     <string name="menu_btn_current_loc_label">请求当前位置</string>
     <string name="menu_btn_talk_label">聊天</string>
     <string name="menu_btn_date_label">约会</string>
-    <string name="menu_btn_exit_label">退出</string>
+    <string name="menu_btn_close_label">关闭</string>
+    <string name="chat_btn_send_label">发送</string>
+    <string name="chat_btn_close_label">关闭</string>
 </resources>
